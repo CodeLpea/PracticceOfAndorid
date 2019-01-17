@@ -5,14 +5,35 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity">
+<!-- 简单的测试界面-->
+<!-- 一个垂直的LinearLayout-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <!-- 再来一个水平方向的LinearLayout-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+            <!-- 开启服务的按钮-->
+            <Button
+                android:id="@+id/btn_open_service"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="开启服务"
+                />
+            <!-- 关闭服务的按钮-->
+            <Button
+                android:id="@+id/btn_close_service"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="开启服务"
+                />
+        </LinearLayout>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    </LinearLayout>
+
 
 </android.support.constraint.ConstraintLayout>
