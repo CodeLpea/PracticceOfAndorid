@@ -14,6 +14,9 @@ import android.widget.Toast;
 
 import com.example.administrator.servieceandbroadcast.Service.MyService;
 
+import static com.example.administrator.servieceandbroadcast.uils.ConfigKey.TIME_THRAED_1;
+import static com.example.administrator.servieceandbroadcast.uils.ConfigKey.TIME_THRAED_2;
+
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     private static final String TAG="MainActivity";
 
@@ -88,7 +91,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 Log.i(TAG, "btn_Service_Commond_1: ");
                 Intent intent = new Intent(this, MyService.class);
                 Bundle bundle = new Bundle();
-                bundle.putSerializable("Key",1);
+                bundle.putSerializable("Key",TIME_THRAED_1);
                 intent.putExtras(bundle);
                 startService(intent);
                 break;
@@ -96,7 +99,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 Log.i(TAG, "btn_Service_Commond_2: ");
                 Intent intent2 = new Intent(this, MyService.class);
                 Bundle bundle2 = new Bundle();
-                bundle2.putSerializable("Key",2);
+                bundle2.putSerializable("Key",TIME_THRAED_2);
                 intent2.putExtras(bundle2);
                 startService(intent2);
                 break;

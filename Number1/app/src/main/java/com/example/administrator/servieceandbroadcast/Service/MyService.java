@@ -12,6 +12,9 @@ import android.widget.Toast;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import static com.example.administrator.servieceandbroadcast.uils.ConfigKey.TIME_THRAED_1;
+import static com.example.administrator.servieceandbroadcast.uils.ConfigKey.TIME_THRAED_2;
+
 public class MyService extends Service {
     private static final String TAG="MyService";
     private timeThread mtimeThread;
@@ -47,6 +50,7 @@ public class MyService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
+        Log.i(TAG, "onStartCommandstartId: "+startId);
         Log.i(TAG, "onStartCommandServic: ");
         Bundle bundle = intent.getExtras();
         if (bundle != null)
@@ -55,14 +59,15 @@ public class MyService extends Service {
             control = (int)bundle.getSerializable("Key");
         if (control != 0) {
             switch (control) {
-                case 1:
+                case TIME_THRAED_1:
                     if(mtimeThread==null){
                         mtimeThread=new timeThread();
                         mtimeThread.start();
                     }
                     Log.i(TAG, " timeThread.start();");
                     break;
-                case 2:
+                case TIME_THRAED_2:
+
                         Log.i(TAG, " timeThread.interrupt(); ");
                     break;
             }
