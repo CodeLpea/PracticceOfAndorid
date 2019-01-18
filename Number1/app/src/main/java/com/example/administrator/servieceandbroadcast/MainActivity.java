@@ -20,6 +20,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private Button btn_open_service;
     private Button btn_close_service;
+    private Button btn_Service_Commond_1;
+    private Button btn_Service_Commond_2;
 
     protected MyService.MyBinder mMyBinder;
 
@@ -53,8 +55,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btn_open_service=findViewById(R.id.btn_open_service);
         btn_close_service=findViewById(R.id.btn_close_service);
 
+        btn_Service_Commond_1=findViewById(R.id.btn_Service_Commond_1);
+        btn_Service_Commond_2=findViewById(R.id.btn_Service_Commond_2);
+
         btn_close_service.setOnClickListener(this);
         btn_open_service.setOnClickListener(this);
+
+        btn_Service_Commond_1.setOnClickListener(this);
+        btn_Service_Commond_2.setOnClickListener(this);
 
     }
 
@@ -76,11 +84,34 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 }
                 Log.i(TAG, "onClick: 关闭服务");
                 break;
+            case R.id.btn_Service_Commond_1:
+                Log.i(TAG, "btn_Service_Commond_1: ");
+                Intent intent = new Intent(this, MyService.class);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("Key",1);
+                intent.putExtras(bundle);
+                startService(intent);
+                break;
+            case R.id.btn_Service_Commond_2:
+                Log.i(TAG, "btn_Service_Commond_2: ");
+                Intent intent2 = new Intent(this, MyService.class);
+                Bundle bundle2 = new Bundle();
+                bundle2.putSerializable("Key",2);
+                intent2.putExtras(bundle2);
+                startService(intent2);
+                break;
             default:
                 Log.i(TAG, "onClick: default");
                 break;
 
         }
 
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unbindService(mCon);
+        Log.i(TAG, "onDestroy: ");
     }
 }
