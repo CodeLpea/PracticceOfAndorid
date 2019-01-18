@@ -1,6 +1,5 @@
 package com.example.administrator.servieceandbroadcast;
 
-import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.content.ServiceConnection;
@@ -10,18 +9,17 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
 
+import com.example.administrator.servieceandbroadcast.Service.BinderListener;
 import com.example.administrator.servieceandbroadcast.Service.MyService;
 
 import static com.example.administrator.servieceandbroadcast.uils.ConfigKey.INTENT_KEY1;
 import static com.example.administrator.servieceandbroadcast.uils.ConfigKey.TIME_THRAED_1;
 import static com.example.administrator.servieceandbroadcast.uils.ConfigKey.TIME_THRAED_2;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener,BinderListener {
     private static final String TAG="MainActivity";
-
-
+    private static BinderListener thisActivity=null;
     private Button btn_open_service;
     private Button btn_close_service;
     private Button btn_Service_Commond_1;
@@ -35,10 +33,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Log.i(TAG, "onCreate: ");
+        thisActivity=this;
         init();
 
     }
-
     private void initService() {
       Intent intent=new Intent(this, MyService.class);
       bindService(intent,mCon,BIND_AUTO_CREATE);
@@ -48,6 +46,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
             Log.i(TAG, "onServiceConnected: bind绑定成功");
             mMyBinder=(MyService.MyBinder)iBinder;
+            mMyBinder.setBinderLister(thisActivity);
         }
 
         @Override
@@ -134,5 +133,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onDestroy();
         unbindService(mCon);
         Log.i(TAG, "onDestroy: ");
+    }
+
+    @Override
+    public void onOpen() {
+        Log.i(TAG, "onOpen:绑定成功，交由ui操作 ");
+    }
+
+    @Override
+    public void onClose() {
+        Log.i(TAG, "onClose: 关闭绑定，交由ui操作");
+    }
+
+    @Override
+    public void onAction() {
+        Log.i(TAG, "onAction: 服务产生特定操作，交由ui执行");
     }
 }

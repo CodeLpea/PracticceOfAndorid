@@ -9,9 +9,6 @@ import android.os.IBinder;
 import android.util.Log;
 import android.widget.Toast;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
 import static com.example.administrator.servieceandbroadcast.uils.ConfigKey.TIME_THRAED_1;
 import static com.example.administrator.servieceandbroadcast.uils.ConfigKey.TIME_THRAED_2;
 
@@ -19,6 +16,8 @@ public class MyService extends Service {
     private static final String TAG="MyService";
     private timeThread mtimeThread;
     private int startId;
+
+    protected static BinderListener binderListener;
 
     public MyService() {
     }
@@ -28,27 +27,48 @@ public class MyService extends Service {
         Log.i(TAG, "onCreateService: ");
     }
 
+    /**
+     * onbind 方法会返回一个IBINDER对象，
+     * 用户可以在Acitivity中使用ServiceConnection来接受这个Ibinder，
+     * 从而来控制正在运行的服务中的某些操作
+     * @param intent
+     * @return
+     */
     @Override
     public IBinder onBind(Intent intent) {
         // TODO: Return the communication channel to the service.
         return new MyBinder();
     }
 
-
+    /**
+     * 通过制定一个
+     */
     public class MyBinder extends Binder {
-        public void connService(){
 
+        public void setBinderLister(BinderListener Lisenr){
+            binderListener =Lisenr;//设置绑定后的操作监听
         }
         public void NotifiStart(Activity activity){
             Toast.makeText(activity,"开启服务",Toast.LENGTH_SHORT).show();
-
+            binderListener.onOpen();//将绑定成功的消息回传给Acticity
         }
         public void NotifiStop(Activity activity){
             Toast.makeText(activity,"关闭服务",Toast.LENGTH_SHORT).show();
+            binderListener.onClose();
         }
 
     }
 
+    /**
+     * 每次启动服务，都会执行该方法
+     * “onCreate()”方法只会在初始时调用一次，
+     * “onStartCommand(Intent intent, int flags, int startId)”方法会在starService（）都被调用，
+     *当中，每次回调onStartCommand()方法时，参数“startId”的值都是递增的，startId用于唯一标识每次对Service发起的处理请求
+     * @param intent
+     * @param flags
+     * @param startId
+     * @return
+     */
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         Log.i(TAG, "onStartCommandstartId: "+startId);
@@ -88,6 +108,9 @@ public class MyService extends Service {
                try {
                    Thread.sleep(5000);
                    Log.i(TAG, "i: "+i++);
+                   if(i==3){
+                      binderListener.onAction();//让Activity执行特定的操作
+                   }
                } catch (InterruptedException e) {
                    e.printStackTrace();
                }
