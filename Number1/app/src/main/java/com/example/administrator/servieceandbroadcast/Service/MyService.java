@@ -18,6 +18,7 @@ import static com.example.administrator.servieceandbroadcast.uils.ConfigKey.TIME
 public class MyService extends Service {
     private static final String TAG="MyService";
     private timeThread mtimeThread;
+    private int startId;
 
     public MyService() {
     }
@@ -67,8 +68,8 @@ public class MyService extends Service {
                     Log.i(TAG, " timeThread.start();");
                     break;
                 case TIME_THRAED_2:
-
-                        Log.i(TAG, " timeThread.interrupt(); ");
+                    Log.i(TAG, "   stopSelf(startId): "+startId);
+                    stopSelf(startId);//当同时采取bindService（）的时候，实际上stopSelf的命令是不起作用的，必须想接触绑定服务才能再手动停止服务。
                     break;
             }
         }
@@ -85,7 +86,7 @@ public class MyService extends Service {
        public void run() {
            while (true){
                try {
-                   Thread.sleep(1000);
+                   Thread.sleep(5000);
                    Log.i(TAG, "i: "+i++);
                } catch (InterruptedException e) {
                    e.printStackTrace();
@@ -93,6 +94,13 @@ public class MyService extends Service {
            }
        }
    }
+
+    @Override
+    public boolean onUnbind(Intent intent) {
+        Log.i(TAG, "onUnbind: ");
+        return super.onUnbind(intent);
+    }
+
     @Override
     public void onDestroy() {
         super.onDestroy();
