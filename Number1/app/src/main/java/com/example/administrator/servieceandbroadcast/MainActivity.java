@@ -3,28 +3,34 @@ package com.example.administrator.servieceandbroadcast;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.os.Handler;
 import android.os.IBinder;
+import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
-import com.example.administrator.servieceandbroadcast.Service.BinderListener;
+import com.example.administrator.servieceandbroadcast.Service.ServiceListener;
 import com.example.administrator.servieceandbroadcast.Service.MyService;
 
 import static com.example.administrator.servieceandbroadcast.uils.ConfigKey.INTENT_KEY1;
 import static com.example.administrator.servieceandbroadcast.uils.ConfigKey.TIME_THRAED_1;
 import static com.example.administrator.servieceandbroadcast.uils.ConfigKey.TIME_THRAED_2;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener,BinderListener {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener,ServiceListener {
     private static final String TAG="MainActivity";
-    private static BinderListener thisActivity=null;
+    private static final  int MSG1=1;
+    private static ServiceListener thisActivity=null;
     private Button btn_open_service;
     private Button btn_close_service;
     private Button btn_Service_Commond_1;
     private Button btn_Service_Commond_2;
     private Button btn_to_intentService;
+
+    private TextView textView;
 
     protected MyService.MyBinder mMyBinder;
 
@@ -46,7 +52,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
             Log.i(TAG, "onServiceConnected: bind绑定成功");
             mMyBinder=(MyService.MyBinder)iBinder;
-            mMyBinder.setBinderLister(thisActivity);
+            mMyBinder.SetServiceListener(thisActivity);
         }
 
         @Override
@@ -63,6 +69,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btn_Service_Commond_2=findViewById(R.id.btn_Service_Commond_2);
 
         btn_to_intentService=findViewById(R.id.btn_to_intentService);
+
+        textView=findViewById(R.id.tv_info);
+
 
         btn_close_service.setOnClickListener(this);
         btn_open_service.setOnClickListener(this);
@@ -146,7 +155,27 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     @Override
-    public void onAction() {
+    public void onAction(int i) {
         Log.i(TAG, "onAction: 服务产生特定操作，交由ui执行");
+        Message message=mhandler.obtainMessage();
+        message.what=MSG1;
+        message.obj="MyService线程进行中......"+i;
+        mhandler.sendMessage(message);
     }
+    private Handler mhandler =new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what) {
+                case MSG1:
+                    textView.append(msg.obj+"\r\n");
+                    break;
+                default:
+                    break;
+            }
+
+        }
+    };
+
+
 }

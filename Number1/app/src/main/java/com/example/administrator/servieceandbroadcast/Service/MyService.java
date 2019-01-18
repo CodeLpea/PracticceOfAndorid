@@ -9,15 +9,16 @@ import android.os.IBinder;
 import android.util.Log;
 import android.widget.Toast;
 
+import static com.example.administrator.servieceandbroadcast.uils.ConfigKey.INTENT_KEY1;
 import static com.example.administrator.servieceandbroadcast.uils.ConfigKey.TIME_THRAED_1;
 import static com.example.administrator.servieceandbroadcast.uils.ConfigKey.TIME_THRAED_2;
 
-public class MyService extends Service {
+public class MyService extends Service{
     private static final String TAG="MyService";
     private timeThread mtimeThread;
     private int startId;
 
-    protected static BinderListener binderListener;
+    protected static ServiceListener serviceListener;
 
     public MyService() {
     }
@@ -40,21 +41,21 @@ public class MyService extends Service {
         return new MyBinder();
     }
 
+
     /**
      * 通过制定一个
      */
     public class MyBinder extends Binder {
-
-        public void setBinderLister(BinderListener Lisenr){
-            binderListener =Lisenr;//设置绑定后的操作监听
+        public void SetServiceListener(ServiceListener listener){
+            serviceListener =listener;
         }
         public void NotifiStart(Activity activity){
             Toast.makeText(activity,"开启服务",Toast.LENGTH_SHORT).show();
-            binderListener.onOpen();//将绑定成功的消息回传给Acticity
+            serviceListener.onOpen();//将绑定成功的消息回传给Acticity
         }
         public void NotifiStop(Activity activity){
             Toast.makeText(activity,"关闭服务",Toast.LENGTH_SHORT).show();
-            binderListener.onClose();
+            serviceListener.onClose();
         }
 
     }
@@ -77,7 +78,7 @@ public class MyService extends Service {
         if (bundle != null)
         {
             int control =0;
-            control = (int)bundle.getSerializable("Key");
+            control = (int)bundle.getSerializable(INTENT_KEY1);
         if (control != 0) {
             switch (control) {
                 case TIME_THRAED_1:
@@ -106,11 +107,9 @@ public class MyService extends Service {
        public void run() {
            while (true){
                try {
-                   Thread.sleep(5000);
+                   Thread.sleep(2000);
                    Log.i(TAG, "i: "+i++);
-                   if(i==3){
-                      binderListener.onAction();//让Activity执行特定的操作
-                   }
+                   serviceListener.onAction(i);//让Activity执行特定的操作
                } catch (InterruptedException e) {
                    e.printStackTrace();
                }
@@ -123,6 +122,7 @@ public class MyService extends Service {
         Log.i(TAG, "onUnbind: ");
         return super.onUnbind(intent);
     }
+
 
     @Override
     public void onDestroy() {

@@ -14,7 +14,7 @@
         <!-- 再来一个水平方向的LinearLayout-->
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="100dp"
+            android:layout_height="50dp"
             android:gravity="center"
             android:orientation="horizontal">
             <!-- 开启服务的按钮-->
@@ -35,7 +35,7 @@
         <!-- 再来一个水平方向的LinearLayout-->
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="100dp"
+            android:layout_height="50dp"
             android:gravity="center"
             android:orientation="horizontal">
             <!-- 开启服务的按钮-->
@@ -56,7 +56,7 @@
         <!-- 再来一个水平方向的LinearLayout-->
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="100dp"
+            android:layout_height="50dp"
             android:gravity="center"
             android:orientation="horizontal">
             <!-- 开启服务的按钮-->
@@ -68,7 +68,27 @@
                 />
 
         </LinearLayout>
+        <!-- 再来一个水平方向的LinearLayout-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="horizontal">
+            <!-- 开启服务的按钮-->
+           <ScrollView
+               android:layout_width="match_parent"
+               android:layout_height="match_parent">
+               <TextView
+                   android:id="@+id/tv_info"
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content"
+                   android:textSize="15dp"
+                   android:textColor="#111"
+                   android:text="Service中的进行信息/可滑动查看\n"
+                   />
+           </ScrollView>
 
+        </LinearLayout>
 
     </LinearLayout>
 

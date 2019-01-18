@@ -44,7 +44,6 @@ IntentService 执行以下操作：
         }
     }
 
-
     @Override
     public void onDestroy() {
         super.onDestroy();
