@@ -43,7 +43,7 @@
                 android:id="@+id/btn_Service_Commond_1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="startService开启服务"
+                android:text="startService服务通信"
                 />
             <!-- 关闭服务的按钮-->
             <Button
@@ -64,7 +64,7 @@
                 android:id="@+id/btn_to_intentService"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="startService开启服务"
+                android:text="intentService开启服务"
                 />
 
         </LinearLayout>

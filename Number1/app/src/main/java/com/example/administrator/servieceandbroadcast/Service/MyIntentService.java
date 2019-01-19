@@ -5,8 +5,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
+import static com.example.administrator.servieceandbroadcast.uils.ConfigKey.INTENTSERVICENOTIFI1;
 import static com.example.administrator.servieceandbroadcast.uils.ConfigKey.INTENT_KEY2;
 
 /**
@@ -18,7 +20,19 @@ public class MyIntentService extends IntentService {
         super("MyIntentService");
     }
 
-/**
+    @Override
+    public void onCreate() {
+        Log.i(TAG, "onCreate: ");
+        super.onCreate();
+    }
+
+    @Override
+    public void onStart(Intent intent, int startId) {
+        Log.i(TAG, "onStart: ");
+        super.onStart(intent, startId);
+    }
+
+    /**
 由于大多数启动服务都不必同时处理多个请求，因此使用 IntentService 类实现服务也许是最好的选择
 IntentService 执行以下操作：
 •创建默认的工作线程，用于在应用的主线程外执行传递给 onStartCommand() 的所有 Intent
@@ -33,9 +47,12 @@ IntentService 执行以下操作：
         Log.i(TAG, "onHandleIntent: ");
         Bundle bundle=intent.getExtras();
         if(bundle!=null){
+            Intent intent1;
             for(int i=0;i<5;i++){
                 try{
                     Thread.sleep(1000);
+                  intent1=new Intent(INTENTSERVICENOTIFI1);
+                  LocalBroadcastManager.getInstance(MyIntentService.this).sendBroadcast(intent1);
                 }catch (InterruptedException e){
                     e.printStackTrace();
                 }

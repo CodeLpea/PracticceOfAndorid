@@ -40,6 +40,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
         Log.i(TAG, "onCreate: ");
         thisActivity=this;
+        initService();//自动绑定
         init();
 
     }
@@ -58,6 +59,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         @Override
         public void onServiceDisconnected(ComponentName componentName) {
             Log.i(TAG, "onServiceDisconnected:被迫终止的时候才会被调用 ");
+            mMyBinder=null;
         }
     };
 
@@ -88,13 +90,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.btn_open_service:
-                initService();
+
                 if(mMyBinder!=null)
                 {
                     mMyBinder.NotifiStart(this);
                     Log.i(TAG, "点击进行bind绑定服务");
                 }else {
-
+                    initService();
                 }
                 break;
             case R.id.btn_close_service:
@@ -102,14 +104,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 {
                     Log.i(TAG, "点击进行unbind: 关闭服务");
                     mMyBinder.NotifiStop(this);
-                    mMyBinder=null;
                     unbindService(mCon);
+                    mMyBinder=null;
                 }else {
                     Log.i(TAG, "服务没有绑定，不能关闭服务绑定");
                 }
                 break;
             case R.id.btn_Service_Commond_1:
-                Log.i(TAG, "点击进行startService绑定服务");
+                Log.i(TAG, "点击进行startService服务通信");
                 Intent intent = new Intent(this, MyService.class);
                 Bundle bundle = new Bundle();
                 bundle.putSerializable(INTENT_KEY1,TIME_THRAED_1);
@@ -117,7 +119,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 startService(intent);
                 break;
             case R.id.btn_Service_Commond_2:
-                Log.i(TAG, "点击进行startService关闭服务");
+                Log.i(TAG, "点击进行stopService关闭服务");
                 Intent intent2 = new Intent(this, MyService.class);
                 Bundle bundle2 = new Bundle();
                 bundle2.putSerializable(INTENT_KEY1,TIME_THRAED_2);
