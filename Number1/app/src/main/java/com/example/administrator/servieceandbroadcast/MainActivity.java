@@ -3,6 +3,7 @@ package com.example.administrator.servieceandbroadcast;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.content.res.Configuration;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
@@ -179,5 +180,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     };
 
-
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        Log.i(TAG, "横竖屏切换: ");
+        Log.d(TAG, "屏幕宽度"+this.getWindow().getWindowManager().getDefaultDisplay().getWidth());
+        Log.d(TAG, "屏幕高度"+this.getWindow().getWindowManager().getDefaultDisplay().getHeight());
+    }
 }
