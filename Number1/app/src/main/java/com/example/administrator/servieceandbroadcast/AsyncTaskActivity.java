@@ -46,7 +46,7 @@ public class AsyncTaskActivity extends AppCompatActivity implements View.OnClick
                         "https://www.jianshu.com/p/1459410b3508"
                 };
                 AsyncDonwLoadTask downloadTask = new AsyncDonwLoadTask(textView,btnDownLoad);
-                downloadTask.execute(urls);
+                downloadTask.execute(urls);//注意一个AsyncTask实例，只能执行一次excute。
                 break;
                 default:
                     break;
