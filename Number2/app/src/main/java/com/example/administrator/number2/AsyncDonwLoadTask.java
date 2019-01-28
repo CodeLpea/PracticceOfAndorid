@@ -112,7 +112,7 @@ public class AsyncDonwLoadTask extends AsyncTask<String,Object,Long> {
         int byteCount = (int)values[0];
         String blogName = (String)values[1];
         String text = textView.getText().toString();
-        text += "\n博客《" + blogName + "》下载完成，共" + byteCount + "字节";
+        text += "\n简书《" + blogName + "》下载完成，共" + byteCount + "字节";
         textView.setText(text);
     }
 
