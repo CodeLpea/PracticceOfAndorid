@@ -30,6 +30,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private Button btn_Service_Commond_1;
     private Button btn_Service_Commond_2;
     private Button btn_to_intentService;
+    private Button btn_to_async;
 
     private TextView textView;
 
@@ -73,6 +74,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         btn_to_intentService=findViewById(R.id.btn_to_intentService);
 
+        btn_to_async=findViewById(R.id.btn_to_async_task);
+
+
         textView=findViewById(R.id.tv_info);
 
 
@@ -84,6 +88,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btn_Service_Commond_2.setOnClickListener(this);
 
         btn_to_intentService.setOnClickListener(this);
+
+        btn_to_async.setOnClickListener(this);
 
     }
 
@@ -131,6 +137,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 Log.i(TAG, "进入intentServiceActivity: ");
                 Intent intent3=new Intent(this,IntentServiceActivity.class);
                 startActivity(intent3);
+                break;
+            case R.id.btn_to_async_task:
+                Log.i(TAG, "进入AsyncTaskActivity: ");
+                Intent intent4=new Intent(this,AsyncTaskActivity.class);
+                startActivity(intent4);
                 break;
             default:
                 Log.i(TAG, "onClick: default");

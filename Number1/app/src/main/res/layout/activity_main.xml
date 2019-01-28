@@ -64,7 +64,22 @@
                 android:id="@+id/btn_to_intentService"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="intentService开启服务"
+                android:text="使用intentService开启服务的界面"
+                />
+
+        </LinearLayout>
+        <!-- 再来一个水平方向的LinearLayout-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+            <!-- 开启服务的按钮-->
+            <Button
+                android:id="@+id/btn_to_async_task"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="使用AsynvTask进行简单的异步操作界面"
                 />
 
         </LinearLayout>

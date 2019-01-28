@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".IntentServiceActivity">
+    <!-- 简单的测试界面-->
+    <!-- 一个垂直的LinearLayout-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <!-- 再来一个水平方向的LinearLayout-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+            <!-- 开启服务的按钮-->
+            <Button
+                android:id="@+id/btn_start_async_task_down"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="开启AsynvTask异步操作"
+                />
+
+        </LinearLayout>
+        <!-- 再来一个水平方向的LinearLayout-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="horizontal">
+            <!-- 开启服务的按钮-->
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <TextView
+                    android:id="@+id/tv_info3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="15dp"
+                    android:textColor="#111"
+                    android:text=" 异步操作中的执行信息\n"
+                    />
+            </ScrollView>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</android.support.constraint.ConstraintLayout>
