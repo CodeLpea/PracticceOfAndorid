@@ -29,7 +29,7 @@
         <!-- 再来一个水平方向的LinearLayout-->
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="100dp"
+            android:layout_height="match_parent"
             android:gravity="center"
             android:orientation="horizontal">
             <!-- 开启服务的按钮-->
@@ -40,7 +40,9 @@
                     android:id="@+id/tv_info2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="tv_info\n"
+                    android:textSize="15dp"
+                    android:textColor="#111"
+                    android:text="IntentService中的执行信息\n"
                     />
             </ScrollView>
 
