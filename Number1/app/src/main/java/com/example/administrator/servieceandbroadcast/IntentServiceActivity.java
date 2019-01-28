@@ -18,6 +18,7 @@ import com.example.administrator.servieceandbroadcast.Service.ServiceListener;
 import static com.example.administrator.servieceandbroadcast.uils.ConfigKey.INTENTSERVICENOTIFI1;
 import static com.example.administrator.servieceandbroadcast.uils.ConfigKey.INTENT_KEY2;
 import static com.example.administrator.servieceandbroadcast.uils.ConfigKey.INTENT_KEY3;
+import static com.example.administrator.servieceandbroadcast.uils.ConfigKey.INTENT_KEY4;
 
 public class IntentServiceActivity extends AppCompatActivity implements View.OnClickListener {
     private  static  final String TAG="IntentServiceActivity";
@@ -41,10 +42,17 @@ public class IntentServiceActivity extends AppCompatActivity implements View.OnC
         LocalBroadcastManager.getInstance(this).registerReceiver(mmmyBroadcastReceiver,intentFilter);
     }
 private class myBroadcastReceiver extends BroadcastReceiver{
+
     @Override
     public void onReceive(Context context, Intent intent) {
-        textView.append("当前intentServicei......."+i+"\r\n");
+        String action = intent.getAction() ;
+        if ( INTENTSERVICENOTIFI1.equals( action )){
+            Log.d( "tttt 消息：" + intent.getExtras().getSerializable(INTENT_KEY4)  , "线程： " + Thread.currentThread().getName() ) ;
+            textView.append("当前intentServicei......."+ intent.getExtras().getSerializable(INTENT_KEY4)  +"\r\n");
+        }
     }
+
+
 }
     private void init() {
         btn_start_intentService=findViewById(R.id.btn_start_intentservice);

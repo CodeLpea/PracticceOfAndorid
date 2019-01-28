@@ -10,6 +10,7 @@ public class ConfigKey {
     public static final String INTENT_KEY1="KEY";
     public static final String INTENT_KEY2=INTENT_KEY1+1;
     public static final String INTENT_KEY3=INTENT_KEY2+1;
+    public static final String INTENT_KEY4=INTENT_KEY3+1;
 
 
     public final static String INTENTSERVICENOTIFI1 = "IntentServiceNotifi1";

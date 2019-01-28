@@ -10,6 +10,7 @@ import android.util.Log;
 
 import static com.example.administrator.servieceandbroadcast.uils.ConfigKey.INTENTSERVICENOTIFI1;
 import static com.example.administrator.servieceandbroadcast.uils.ConfigKey.INTENT_KEY2;
+import static com.example.administrator.servieceandbroadcast.uils.ConfigKey.INTENT_KEY4;
 
 /**
  * Author by lp,on 2019/1/18/018,13:52.
@@ -46,12 +47,16 @@ IntentService 执行以下操作：
     protected void onHandleIntent(Intent intent) {
         Log.i(TAG, "onHandleIntent: ");
         Bundle bundle=intent.getExtras();
+        Bundle bundle2;
         if(bundle!=null){
             Intent intent1;
             for(int i=0;i<5;i++){
                 try{
                     Thread.sleep(1000);
                   intent1=new Intent(INTENTSERVICENOTIFI1);
+                  bundle2=new Bundle();
+                  bundle2.putSerializable(INTENT_KEY4,i);
+                  intent1.putExtras(bundle2);
                   LocalBroadcastManager.getInstance(MyIntentService.this).sendBroadcast(intent1);
                 }catch (InterruptedException e){
                     e.printStackTrace();
