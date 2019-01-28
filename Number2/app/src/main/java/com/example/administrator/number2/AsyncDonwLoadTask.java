@@ -30,7 +30,7 @@ public class AsyncDonwLoadTask extends AsyncTask<String,Object,Long> {
 * */
     @Override
     protected void onPreExecute() {
-        Log.i("iSpring", "DownloadTask -> onPreExecute, Thread name: " + Thread.currentThread().getName());
+        Log.i(TAG, "DownloadTask -> onPreExecute, Thread name: " + Thread.currentThread().getName());
         super.onPreExecute();
         btnDownload.setEnabled(false);
         textView.setText("开始下载...");
@@ -42,7 +42,7 @@ public class AsyncDonwLoadTask extends AsyncTask<String,Object,Long> {
 * */
     @Override
     protected Long doInBackground(String... params) {
-        Log.i("iSpring", "DownloadTask -> doInBackground, Thread name: " + Thread.currentThread().getName());
+        Log.i(TAG, "DownloadTask -> doInBackground, Thread name: " + Thread.currentThread().getName());
         //totalByte表示所有下载的文件的总字节数
         long totalByte = 0;
         //params是一个String数组
@@ -107,7 +107,7 @@ public class AsyncDonwLoadTask extends AsyncTask<String,Object,Long> {
  * */
     @Override
     protected void onProgressUpdate(Object... values) {
-        Log.i("iSpring", "DownloadTask -> onProgressUpdate, Thread name: " + Thread.currentThread().getName());
+        Log.i(TAG, "DownloadTask -> onProgressUpdate, Thread name: " + Thread.currentThread().getName());
         super.onProgressUpdate(values);
         int byteCount = (int)values[0];
         String blogName = (String)values[1];
@@ -121,7 +121,7 @@ public class AsyncDonwLoadTask extends AsyncTask<String,Object,Long> {
      * */
     @Override
     protected void onPostExecute(Long aLong) {
-        Log.i("iSpring", "DownloadTask -> onPostExecute, Thread name: " + Thread.currentThread().getName());
+        Log.i(TAG, "DownloadTask -> onPostExecute, Thread name: " + Thread.currentThread().getName());
         super.onPostExecute(aLong);
         String text = textView.getText().toString();
         text += "\n全部下载完成，总共下载了" + aLong + "个字节";
@@ -133,7 +133,7 @@ public class AsyncDonwLoadTask extends AsyncTask<String,Object,Long> {
  * */
     @Override
     protected void onCancelled() {
-        Log.i("iSpring", "DownloadTask -> onCancelled, Thread name: " + Thread.currentThread().getName());
+        Log.i(TAG, "DownloadTask -> onCancelled, Thread name: " + Thread.currentThread().getName());
         super.onCancelled();
         textView.setText("取消下载");
         btnDownload.setEnabled(true);
