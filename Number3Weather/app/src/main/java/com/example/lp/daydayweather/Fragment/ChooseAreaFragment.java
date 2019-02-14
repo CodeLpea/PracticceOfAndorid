@@ -2,6 +2,7 @@ package com.example.lp.daydayweather.Fragment;
 
 import android.app.Fragment;
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -24,6 +25,7 @@ import com.example.lp.daydayweather.Dao.Province;
 import com.example.lp.daydayweather.R;
 import com.example.lp.daydayweather.Util.HttpUtil;
 import com.example.lp.daydayweather.Util.Utility;
+import com.example.lp.daydayweather.WeatherActivity;
 
 import org.litepal.crud.DataSupport;
 
@@ -85,7 +87,10 @@ public class ChooseAreaFragment extends Fragment {
         listView.setAdapter(adapter);
         return view;
     }
-
+/**
+ *在onActivityCreated()调用之前 activity的onCreate可能还没有完成，
+ *所以不能再onCreateView()中进行 与activity有交互的UI操作，
+ * UI交互操作可以在onActivityCreated()里面进行。*/
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
@@ -98,6 +103,12 @@ public class ChooseAreaFragment extends Fragment {
                 }else if(currentLevel==LEVL_CITY){
                     selectedCity=cityList.get(postion);
                     queryCounties();
+                }else if(currentLevel==LEVL_COUNTY){
+                    String weatherId=countyList.get(postion).getWeatherId();
+                    Intent intent =new Intent(getActivity(), WeatherActivity.class);
+                    intent.putExtra("weather_id",weatherId);
+                    startActivity(intent);
+                    getActivity().finish();
                 }
 
             }
@@ -272,4 +283,6 @@ public class ChooseAreaFragment extends Fragment {
         }
 
     }
+
+
 }

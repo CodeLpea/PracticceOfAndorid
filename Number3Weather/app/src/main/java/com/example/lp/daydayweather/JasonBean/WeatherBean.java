@@ -2,7 +2,7 @@ package com.example.lp.daydayweather.JasonBean;
 
 import java.util.List;
 
-public class weatherBean {
+public class WeatherBean {
 
     private List<HeWeatherBean> HeWeather;
 
