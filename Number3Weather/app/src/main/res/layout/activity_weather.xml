@@ -12,6 +12,20 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scaleType="centerCrop"/>
+    <!--在最外面签到DrawerLayout -->
+    <android.support.v4.widget.DrawerLayout
+        android:id="@+id/drawer_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+
+    <!-- 增加下拉刷新-->
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/siwp_refresh"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
     <!-- 引入布局-->
 <ScrollView
     android:scrollbars="none"
@@ -35,4 +49,16 @@
     </LinearLayout>
 
 </ScrollView>
+
+    </android.support.v4.widget.SwipeRefreshLayout>
+        <!-- 滑动菜单，引入chooseAreaFragment-->
+        <fragment
+            android:id="@+id/choose_area_in_fragement"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:name="com.example.lp.daydayweather.Fragment.ChooseAreaFragment"
+            android:layout_gravity="start"
+            tools:layout="@layout/choose_area"
+            />
+    </android.support.v4.widget.DrawerLayout>
 </FrameLayout>

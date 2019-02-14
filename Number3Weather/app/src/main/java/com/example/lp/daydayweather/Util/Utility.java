@@ -2,21 +2,16 @@ package com.example.lp.daydayweather.Util;
 
 
 import android.text.TextUtils;
-import android.util.Log;
 
-import com.example.lp.daydayweather.Config.Config;
 import com.example.lp.daydayweather.Dao.City;
 import com.example.lp.daydayweather.Dao.County;
 import com.example.lp.daydayweather.Dao.Province;
-import com.example.lp.daydayweather.JasonBean.WeatherBean;
 import com.example.lp.daydayweather.gson.Weather;
 import com.google.gson.Gson;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import static com.example.lp.daydayweather.Fragment.ChooseAreaFragment.TAG;
 
 /**
  * 解析和处理服务器返回的数据

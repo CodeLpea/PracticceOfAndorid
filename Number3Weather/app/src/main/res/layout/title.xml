@@ -26,6 +26,13 @@
             android:textSize="20sp"
             android:text="时间"
             />
-
+        <Button
+            android:id="@+id/btn_nav"
+            android:layout_marginLeft="10dp"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:background="@drawable/ic_button_locate"
+            android:layout_width="30dp"
+            android:layout_height="30dp" />
 
 </RelativeLayout>

@@ -1,4 +1,4 @@
-package com.example.lp.daydayweather.Config;
+package com.example.lp.daydayweather.Util;
 
 public class Config {
 /**
@@ -30,4 +30,5 @@ public class Config {
     public static String CountyWeatherId="weather_id";
     public static String preferencesWeather="weather";
     public static String preferencesImgUrl="imgUrl";
+    public static String preferencesTime="time";
 }

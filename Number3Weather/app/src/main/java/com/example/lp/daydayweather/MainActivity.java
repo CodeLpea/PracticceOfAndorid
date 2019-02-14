@@ -6,9 +6,7 @@ import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-import org.litepal.LitePal;
-
-import static com.example.lp.daydayweather.Config.Config.preferencesWeather;
+import static com.example.lp.daydayweather.Util.Config.preferencesWeather;
 
 public class MainActivity extends AppCompatActivity {
 

@@ -3,10 +3,8 @@ package com.example.lp.daydayweather.Fragment;
 import android.app.Fragment;
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.annotation.RequiresApi;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,10 +16,11 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.lp.daydayweather.Config.Config;
+import com.example.lp.daydayweather.Util.Config;
 import com.example.lp.daydayweather.Dao.City;
 import com.example.lp.daydayweather.Dao.County;
 import com.example.lp.daydayweather.Dao.Province;
+import com.example.lp.daydayweather.MainActivity;
 import com.example.lp.daydayweather.R;
 import com.example.lp.daydayweather.Util.HttpUtil;
 import com.example.lp.daydayweather.Util.Utility;
@@ -105,10 +104,20 @@ public class ChooseAreaFragment extends Fragment {
                     queryCounties();
                 }else if(currentLevel==LEVL_COUNTY){
                     String weatherId=countyList.get(postion).getWeatherId();
+                    if(getActivity() instanceof MainActivity){
                     Intent intent =new Intent(getActivity(), WeatherActivity.class);
                     intent.putExtra("weather_id",weatherId);
                     startActivity(intent);
                     getActivity().finish();
+                    }
+                    else if(getActivity() instanceof  WeatherActivity){
+                        WeatherActivity activity=(WeatherActivity) getActivity();
+                        activity.drawerLayout.closeDrawers();
+                        activity.swipeRefresh.setRefreshing(true);//选择完城市之后，出现刷新的标志。
+                        activity.requestWeather(weatherId);
+                    }
+
+
                 }
 
             }
