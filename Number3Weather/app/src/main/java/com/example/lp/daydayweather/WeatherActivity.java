@@ -85,8 +85,9 @@ public class WeatherActivity extends AppCompatActivity {
             Log.i(TAG, "比对一下是否满足刷新要求: ");
             long time=TimeUtils.getInstance().getTimeExpend(upateTime,date);
             Log.i(TAG, "时间差: "+time);
-            if(time>2){
+            if(time>=1){
                 //如果时间差大于两个小时则刷新
+                swipeRefresh.setRefreshing(true);//显示刷新
                 requestWeather(mWeatherId);
             }else{
                 Log.i(TAG, "autoUpadate: 还没到自动刷新时间");
@@ -199,11 +200,11 @@ private void savaUpdateTime(String date){
     private void initWeather() {
         SharedPreferences preferences= PreferenceManager.getDefaultSharedPreferences(this);
         String weatherString =preferences.getString(preferencesWeather,null);
-        autoUpadate();//自动刷新
         if(weatherString!=null){
             //有缓存就直接解析
             Weather weatherBean= Utility.getInstance().handleWeaherResponse(weatherString);
             mWeatherId=weatherBean.basic.weatherId;
+            autoUpadate();//自动刷新
             showWeatherInfo(weatherBean);
         }else {
             //无缓存就直接去服务器查询天气
