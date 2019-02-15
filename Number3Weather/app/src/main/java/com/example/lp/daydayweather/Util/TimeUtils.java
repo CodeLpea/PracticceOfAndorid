@@ -15,7 +15,7 @@ public class TimeUtils {
     /**传入开始时间和结束时间字符串来计算消耗时长
      * */
     public long getTimeExpend(String startTime, String endTime){
-        //传入字串类型 2016/06/28 08:30
+        //传入字串类型 2016年06月28日 08:30
         long longStart = getTimeMillis(startTime); //获取开始时间毫秒数
         long longEnd = getTimeMillis(endTime);  //获取结束时间毫秒数
         long longExpend = longEnd - longStart;  //获取时间差

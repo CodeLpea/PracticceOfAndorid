@@ -8,7 +8,7 @@ import android.os.Bundle;
 
 import static com.example.lp.daydayweather.Util.Config.preferencesWeather;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,7 +19,6 @@ public class MainActivity extends AppCompatActivity {
             Intent intent=new Intent(this,WeatherActivity.class);
             startActivity(intent);
             finish();
-
         }
 
     }

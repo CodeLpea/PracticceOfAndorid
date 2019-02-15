@@ -93,6 +93,33 @@ public class ChooseAreaFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        listViewClick();// 处理istView的各级点击事件，刷新listView。（进入）
+        backButtonClick();//处理不同级别下的返回事件，刷新listView。（返回）
+        queryProvinces();//直接查询省份信息，并显示
+
+    }
+/**
+ * backButtonClick
+ * 点击事件
+ * */
+    private void backButtonClick() {
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(currentLevel==LEVL_COUNTY){
+                    queryCities();
+                }else if(currentLevel==LEVL_CITY){
+                    queryProvinces();
+                }
+            }
+        });
+    }
+
+    /**
+     * listViewClick
+     * 点击事件
+     * */
+    private void listViewClick() {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int postion, long id) {
@@ -104,11 +131,11 @@ public class ChooseAreaFragment extends Fragment {
                     queryCounties();
                 }else if(currentLevel==LEVL_COUNTY){
                     String weatherId=countyList.get(postion).getWeatherId();
-                    if(getActivity() instanceof MainActivity){
-                    Intent intent =new Intent(getActivity(), WeatherActivity.class);
-                    intent.putExtra("weather_id",weatherId);
-                    startActivity(intent);
-                    getActivity().finish();
+                    if(getActivity() instanceof MainActivity){//判断当前碎片是否属于MainActivity
+                        Intent intent =new Intent(getActivity(), WeatherActivity.class);
+                        intent.putExtra("weather_id",weatherId);
+                        startActivity(intent);
+                        getActivity().finish();
                     }
                     else if(getActivity() instanceof  WeatherActivity){
                         WeatherActivity activity=(WeatherActivity) getActivity();
@@ -122,21 +149,9 @@ public class ChooseAreaFragment extends Fragment {
 
             }
         });
-
-        backButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(currentLevel==LEVL_COUNTY){
-                    queryCities();
-                }else if(currentLevel==LEVL_CITY){
-                    queryProvinces();
-                }
-            }
-        });
-        queryProvinces();
-
     }
-/**
+
+    /**
 *查询全国所有的省份
 *有限从数据库查询
  * 如果没有再从服务器上查询
@@ -153,7 +168,7 @@ public class ChooseAreaFragment extends Fragment {
             adapter.notifyDataSetChanged();//更新listView
             listView.setSelection(0);
             currentLevel=LEVL_PROVINCE;
-        }else {
+        }else {//如果没有就进行网络请求
             String address= Config.provinceApi;
             queryFromServer(address,Config.province);
         }
@@ -174,7 +189,6 @@ public class ChooseAreaFragment extends Fragment {
             dataList.clear();
             for(City city:cityList){
                 dataList.add(city.getCityName());
-
             }
             adapter.notifyDataSetChanged();
             listView.setSelection(0);

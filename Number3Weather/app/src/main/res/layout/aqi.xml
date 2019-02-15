@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:layout_margin="15dp"
     android:orientation="vertical"
-    android:background="#8000"
+    android:background="@drawable/shape_corner"
 
     >
     <!--空气质量左上角标志 -->

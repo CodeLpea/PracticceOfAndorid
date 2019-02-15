@@ -1,36 +1,27 @@
 package com.example.lp.daydayweather;
 
 import android.content.SharedPreferences;
-import android.graphics.Color;
-import android.os.Build;
 import android.preference.PreferenceManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.webkit.DownloadListener;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import com.bumptech.glide.Glide;
 import com.example.lp.daydayweather.Util.HttpUtil;
 import com.example.lp.daydayweather.Util.TimeUtils;
 import com.example.lp.daydayweather.Util.Utility;
 import com.example.lp.daydayweather.gson.Forecast;
 import com.example.lp.daydayweather.gson.Weather;
-
 import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
-
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
@@ -42,15 +33,17 @@ import static com.example.lp.daydayweather.Util.Config.preferencesWeather;
 import static com.example.lp.daydayweather.Util.Config.weatherKey;
 import static com.example.lp.daydayweather.Util.Config.weatherUrl;
 
-public class WeatherActivity extends AppCompatActivity {
+public class WeatherActivity extends BaseActivity {
     private static final String TAG="WeatherActivity";
+    private  SharedPreferences.Editor editor;
+    private  SharedPreferences preferences;
     private ScrollView weatherLayout;
     private TextView titileCity,titleUpateTime,degreeText,weatherInfoText,aqiText,pm25Text,comfortText,carWashText,sportText;
     private LinearLayout forecastLayout;//未来几天预告
 
-    private ImageView bingPicImg;
+    private ImageView bingPicImg;//背景图片
 
-    private String mWeatherId;
+    private String mWeatherId;//用于访问天气的城市id
     public SwipeRefreshLayout swipeRefresh;//刷新控件
 
     public DrawerLayout drawerLayout;//滑动菜单
@@ -60,7 +53,6 @@ public class WeatherActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-       // makeBackGroundFuSion();//将背景图片与状态栏融合到一起
         setContentView(R.layout.activity_weather);
         init();//初始化控件
         initWeather();//初始化天气ui
@@ -76,10 +68,8 @@ public class WeatherActivity extends AppCompatActivity {
         Log.i(TAG, "autoUpadate: ");
         SimpleDateFormat sdf=new SimpleDateFormat("yyyy年MM月dd日 HH:mm:ss");
         String date=sdf.format(new java.util.Date());
-        Log.i(TAG, "getTimeInMillis: "+ Calendar.getInstance().getTimeInMillis());
         Log.i(TAG, "date"+date);
         //先判断一下是否存在上次刷新的时间
-        SharedPreferences preferences= PreferenceManager.getDefaultSharedPreferences(this);
         String upateTime=preferences.getString(preferencesTime,null);//读取是上次刷新时间
         if(upateTime!=null){//如果有，就比对一下是否满足刷新要求
             Log.i(TAG, "比对一下是否满足刷新要求: ");
@@ -106,7 +96,6 @@ public class WeatherActivity extends AppCompatActivity {
      * 保存刷新的时间*/
 private void savaUpdateTime(String date){
     Log.i(TAG, "savaUpdateTime:保存刷新的时间 ");
-    SharedPreferences.Editor editor=PreferenceManager.getDefaultSharedPreferences(WeatherActivity.this).edit();
     editor.putString(preferencesTime,date);
     editor.apply();//将时间保存下来的地址缓存下来
 
@@ -136,30 +125,11 @@ private void savaUpdateTime(String date){
         });
     }
 
-    /**
- * 将背景图片与状态栏融合到一起
- * */
-    private void makeBackGroundFuSion() {
-        if(Build.VERSION.SDK_INT>=21){
-            View decorView=getWindow().getDecorView();//难道当前活动的DecorView
-            decorView.setSystemUiVisibility(
-                    View.SYSTEM_UI_FLAG_FULLSCREEN
-                    |
-                    View.SYSTEM_UI_FLAG_LAYOUT_STABLE);//改变系统UI的显示：活动布局的现实在状态栏上面
-            getWindow().setStatusBarColor(Color.TRANSPARENT);//将状态栏设置成透明
-/**
- * 此处还会存在显示过于贴近状态栏的问题
- * 需要在相应的layout中，添加 android:fitsSystemWindows="true"
- * 表示为系统状态栏留出空间
- * */
-        }
-    }
 
     /**
  *初始化背景图
  * */
     private void initImg() {
-        SharedPreferences preferences= PreferenceManager.getDefaultSharedPreferences(this);
         String bingPicUrl=preferences.getString(preferencesImgUrl,null);
         if(bingPicUrl!=null){//如果有图片的地址的话
             Glide.with(this).load(bingPicUrl).into(bingPicImg);//将网络地址中的图片，加载到图片控件中
@@ -182,7 +152,6 @@ private void savaUpdateTime(String date){
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 final String bingPicUrl=response.body().string();
-                SharedPreferences.Editor editor=PreferenceManager.getDefaultSharedPreferences(WeatherActivity.this).edit();
                 editor.putString(preferencesImgUrl,bingPicUrl);
                 editor.apply();//将背景图片的地址缓存下来
                 runOnUiThread(new Runnable() {//在主线程中去更新界面
@@ -198,7 +167,6 @@ private void savaUpdateTime(String date){
     /**
  * 初始化天气，加载缓存或者从接口更新*/
     private void initWeather() {
-        SharedPreferences preferences= PreferenceManager.getDefaultSharedPreferences(this);
         String weatherString =preferences.getString(preferencesWeather,null);
         if(weatherString!=null){
             //有缓存就直接解析
@@ -236,7 +204,6 @@ private void savaUpdateTime(String date){
                         @Override
                         public void run() {
                             if(weatherBean!=null&&weatherBean.status.equals("ok")){
-                                SharedPreferences.Editor editor=PreferenceManager.getDefaultSharedPreferences(WeatherActivity.this).edit();
                                 editor.putString(preferencesWeather,responseText);
                                 editor.apply();//放入缓存
                                 mWeatherId=weatherBean.basic.weatherId;//将手动选择了城市之后的，重新刷新的weatherId记录下来
@@ -258,12 +225,10 @@ private void savaUpdateTime(String date){
  * 加载weatherBean实体类中的天气数据到ui
  * */
     private void showWeatherInfo(Weather weatherBean) {
-        SharedPreferences preferences= PreferenceManager.getDefaultSharedPreferences(this);
-        String upateTime=preferences.getString(preferencesTime,null).split(" ")[1];//读取是上次刷新时间
-
+        String upateTime=preferences.getString(preferencesTime,null).split(" ")[1];//读取是上次刷新时间,分割，只显示时分秒
         String cityName=weatherBean.basic.cityName;//城市
         //String updateTime=weatherBean.basic.update.updateTime.split(" ")[1];//时间
-        String updateTime=weatherBean.basic.update.updateTime;//时间
+        //String updateTime=weatherBean.basic.update.updateTime;//时间
         String degree=weatherBean.now.temperature+"℃";//温度
         String weatherInfo=weatherBean.now.more.info;//晴、阴
         titileCity.setText(cityName);
@@ -327,6 +292,8 @@ private void savaUpdateTime(String date){
         drawerLayout=findViewById(R.id.drawer_layout);
         navButton=findViewById(R.id.btn_nav);
 
+        editor=PreferenceManager.getDefaultSharedPreferences(WeatherActivity.this).edit();
+        preferences= PreferenceManager.getDefaultSharedPreferences(this);
 
     }
 }
