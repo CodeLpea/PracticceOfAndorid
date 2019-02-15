@@ -172,8 +172,8 @@ private void savaUpdateTime(String date){
             //有缓存就直接解析
             Weather weatherBean= Utility.getInstance().handleWeaherResponse(weatherString);
             mWeatherId=weatherBean.basic.weatherId;
-            autoUpadate();//自动刷新
             showWeatherInfo(weatherBean);
+            autoUpadate();//自动刷新
         }else {
             //无缓存就直接去服务器查询天气
             mWeatherId=getIntent().getStringExtra("weather_id");
