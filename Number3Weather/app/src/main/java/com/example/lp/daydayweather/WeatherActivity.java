@@ -209,6 +209,7 @@ private void savaUpdateTime(String date){
                                 mWeatherId=weatherBean.basic.weatherId;//将手动选择了城市之后的，重新刷新的weatherId记录下来
                                 savaUpdateTime(dateNow);//保存刷新时间
                                 showWeatherInfo(weatherBean);
+                                loadBingPic();
                             }else {
                                 Log.i(TAG, "获取天气信息失败");
 
