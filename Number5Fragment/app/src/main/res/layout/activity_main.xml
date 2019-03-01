@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    tools:context=".MainActivity">
+<!-- LinearLayout 左侧任务栏-->
+   <LinearLayout
+       android:orientation="vertical"
+       android:layout_weight="1"
+       android:layout_width="0dp"
+       android:layout_height="match_parent">
+       <Button
+           android:id="@+id/bt_1"
+           android:text="1"
+           android:layout_width="wrap_content"
+           android:layout_height="0dp"
+           android:layout_weight="1"/>
+       <Button
+           android:id="@+id/bt_2"
+           android:text="2"
+           android:layout_width="wrap_content"
+           android:layout_height="0dp"
+           android:layout_weight="1"/>
+
+
+   </LinearLayout>
+    <!-- LinearLayout 左侧任务栏-->
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_weight="8"
+        android:layout_width="0dp"
+        android:layout_height="match_parent">
+<FrameLayout
+    android:layout_weight="1"
+    android:layout_width="match_parent"
+    android:layout_height="0dp">
+    <fragment
+        android:id="@+id/fragment_up"
+        android:layout_width="match_parent"
+        android:name="com.example.lp.myfragment.upFragment"
+        android:layout_height="match_parent"
+        />
+
+</FrameLayout>
+        <FrameLayout
+            android:id="@+id/fragment_donw"
+            android:layout_weight="9"
+            android:layout_width="match_parent"
+            android:layout_height="0dp">
+
+
+        </FrameLayout>
+
+    </LinearLayout>
+</LinearLayout>
