@@ -22,16 +22,30 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         initView();
-        initFragment();
+        //initRepalceFragment();
+        initShowFragment();
     }
 
-    private void initFragment() {
+    private void initRepalceFragment() {
         Log.i(TAG, "initFragment: ");
        //fragmentTransaction=getFragmentManager().beginTransaction();
         fragmentTransaction=getSupportFragmentManager().beginTransaction();
         down01Fragment=new down01Fragment();
         down02Fragment=new down02Fragment();
         fragmentTransaction.replace(R.id.fragment_donw,down01Fragment);//replace的形式是每次都刷新，add show不会刷新，只是hide隐藏起来
+        fragmentTransaction.commit();
+
+    }
+    private void initShowFragment() {//show的形式展示Fragment
+        Log.i(TAG, "initFragment: ");
+        //fragmentTransaction=getFragmentManager().beginTransaction();
+        fragmentTransaction=getSupportFragmentManager().beginTransaction();
+        down01Fragment=new down01Fragment();
+        down02Fragment=new down02Fragment();
+        fragmentTransaction.add(R.id.fragment_donw,down01Fragment);//replace的形式是每次都刷新，add show不会刷新，只是hide隐藏起来
+        fragmentTransaction.add(R.id.fragment_donw,down02Fragment);//replace的形式是每次都刷新，add show不会刷新，只是hide隐藏起来
+        fragmentTransaction.hide(down02Fragment);
+        fragmentTransaction.show(down01Fragment);
         fragmentTransaction.commit();
 
     }
@@ -48,11 +62,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.bt_1:
-                fragmentTransaction.replace(R.id.fragment_donw,down01Fragment);
+                /*fragmentTransaction=getSupportFragmentManager().beginTransaction();
+                fragmentTransaction.replace(R.id.fragment_donw,down01Fragment);*/
+                fragmentTransaction=getSupportFragmentManager().beginTransaction();
+                fragmentTransaction.hide(down02Fragment);
+                fragmentTransaction.show(down01Fragment);
                 fragmentTransaction.commit();
                 break;
             case R.id.bt_2:
-                fragmentTransaction.replace(R.id.fragment_donw,down02Fragment);
+              /*  fragmentTransaction=getSupportFragmentManager().beginTransaction();
+                fragmentTransaction.replace(R.id.fragment_donw,down02Fragment);*/
+                fragmentTransaction=getSupportFragmentManager().beginTransaction();
+                fragmentTransaction.hide(down01Fragment);
+                fragmentTransaction.show(down02Fragment);
                 fragmentTransaction.commit();
                 break;
         }
