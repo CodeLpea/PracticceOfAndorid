@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.administrator.servieceandbroadcast.Service.MyIntentService;
+import com.example.administrator.servieceandbroadcast.Service.MyService;
 import com.example.administrator.servieceandbroadcast.Service.ServiceListener;
 
 import static com.example.administrator.servieceandbroadcast.uils.ConfigKey.INTENTSERVICENOTIFI1;
@@ -73,7 +74,8 @@ private class myBroadcastReceiver extends BroadcastReceiver{
 
     public void ToMyIntentService(){
         Log.i(TAG, "ToMyIntentService: ");
-        Intent intent=new Intent(this, MyIntentService.class);
+        MyIntentService myIntentService=new MyIntentService();
+        Intent intent=new Intent(this, myIntentService.getClass());
         Bundle bundle=new Bundle();
         bundle.putString(INTENT_KEY2,"当前值i++:      "+i++);
         intent.putExtras(bundle);
